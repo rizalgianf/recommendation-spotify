@@ -47,12 +47,12 @@ Dataset yang digunakan adalah [Top 10,000 Spotify Songs (1960-now)](https://www.
 - Popularity: Skor popularitas lagu
 
 **Kondisi Data:**
-    - Sebagian besar kolom memiliki data yang cukup lengkap, namun terdapat beberapa kolom dengan nilai kosong (missing values):
-      - **Kolom `Album Genres`** sepenuhnya kosong (10.000 nilai kosong).
-      - **Kolom `Artist Genres`** memiliki 551 nilai kosong.
-      - **Kolom `Track Preview URL`** memiliki 63 nilai kosong.
-      - Kolom numerik seperti `Danceability`, `Energy`, `Key`, `Loudness`, `Mode`, `Speechiness`, `Acousticness`, `Instrumentalness`, `Liveness`, `Valence`, `Tempo`, dan `Time Signature` memiliki masing-masing 5 nilai kosong.
-      - Kolom metadata seperti `Label` dan `Copyrights` memiliki masing-masing 7 dan 23 nilai kosong.
+- Sebagian besar kolom memiliki data yang cukup lengkap, namun terdapat beberapa kolom dengan nilai kosong (missing values):
+  - **Kolom `Album Genres`** sepenuhnya kosong (10.000 nilai kosong).
+  - **Kolom `Artist Genres`** memiliki 551 nilai kosong.
+  - **Kolom `Track Preview URL`** memiliki 63 nilai kosong.
+  - Kolom numerik seperti `Danceability`, `Energy`, `Key`, `Loudness`, `Mode`, `Speechiness`, `Acousticness`, `Instrumentalness`, `Liveness`, `Valence`, `Tempo`, dan `Time Signature` memiliki masing-masing 5 nilai kosong.
+  - Kolom metadata seperti `Label` dan `Copyrights` memiliki masing-masing 7 dan 23 nilai kosong.
 
 **Insight Data:**
 - Lagu berasal dari berbagai dekade dan genre.
@@ -98,22 +98,21 @@ df_clean['combined_features'] = (
 
 Kode ini bertujuan untuk membuat kolom baru bernama `combined_features` dalam DataFrame `df_clean`. Kolom ini menggabungkan informasi dari dua kolom teks, yaitu `Artist Genres` dan `Artist Name(s)`. Berikut penjelasan langkah-langkahnya:
 
- **`df_clean['Artist Genres'].astype(str)`**  
-    Mengonversi nilai dalam kolom `Artist Genres` menjadi tipe data string. Hal ini dilakukan untuk memastikan semua nilai dapat digabungkan, termasuk nilai NaN (akan diubah menjadi string `'nan'`).
+- **`df_clean['Artist Genres'].astype(str)`**  
+  Mengonversi nilai dalam kolom `Artist Genres` menjadi tipe data string. Hal ini dilakukan untuk memastikan semua nilai dapat digabungkan, termasuk nilai NaN (akan diubah menjadi string `'nan'`).
 
- **`df_clean['Artist Name(s)'].astype(str)`**  
-    Mengonversi nilai dalam kolom `Artist Name(s)` menjadi tipe data string, dengan alasan yang sama seperti langkah sebelumnya.
+- **`df_clean['Artist Name(s)'].astype(str)`**  
+  Mengonversi nilai dalam kolom `Artist Name(s)` menjadi tipe data string, dengan alasan yang sama seperti langkah sebelumnya.
 
- **Penggabungan dengan Operator `+`**  
-    Menggabungkan string dari kolom `Artist Genres` dan `Artist Name(s)` dengan menambahkan spasi (`' '`) di antara keduanya. Hasilnya adalah string gabungan yang berisi genre dan nama artis.
+- **Penggabungan dengan Operator `+`**  
+  Menggabungkan string dari kolom `Artist Genres` dan `Artist Name(s)` dengan menambahkan spasi (`' '`) di antara keduanya. Hasilnya adalah string gabungan yang berisi genre dan nama artis.
 
- **Hasil Akhir**  
-    Kolom baru `combined_features` akan berisi teks gabungan dari genre dan nama artis, yang dapat digunakan untuk analisis berbasis teks, seperti pembuatan matriks TF-IDF untuk sistem rekomendasi.
+- **Hasil Akhir**  
+  Kolom baru `combined_features` akan berisi teks gabungan dari genre dan nama artis, yang dapat digunakan untuk analisis berbasis teks, seperti pembuatan matriks TF-IDF untuk sistem rekomendasi.
 
 **Contoh Hasil:**
 - Jika `Artist Genres` = `"pop, uk pop"` dan `Artist Name(s)` = `"Ed Sheeran"`, maka `combined_features` = `"pop, uk pop Ed Sheeran"`.
 - Jika `Artist Genres` = `NaN` dan `Artist Name(s)` = `"Adele"`, maka `combined_features` = `"nan Adele"`.
-
 
 ### 4. Pilih dan Normalisasi Fitur Numerik
 
@@ -128,92 +127,66 @@ df_num_scaled = scaler.fit_transform(df_clean[num_features])
 **Penjelasan:**  
 ### Penjelasan Kode: Pilih dan Normalisasi Fitur Numerik
 
-**`num_features`**  
-    - Variabel `num_features` adalah daftar nama kolom yang berisi fitur numerik dari DataFrame `df_clean`. Fitur-fitur ini dipilih karena relevan untuk analisis atau pemrosesan lebih lanjut.
-    - Fitur yang dipilih:
-      - `Danceability`: Tingkat kelayakan lagu untuk menari.
-      - `Energy`: Tingkat energi lagu.
-      - `Speechiness`: Proporsi elemen vokal dalam lagu.
-      - `Acousticness`: Kemungkinan lagu bersifat akustik.
-      - `Instrumentalness`: Tingkat instrumental dalam lagu.
-      - `Liveness`: Kemungkinan lagu direkam secara langsung.
-      - `Valence`: Tingkat kebahagiaan atau kesedihan lagu.
-      - `Tempo`: Kecepatan lagu dalam BPM (beats per minute).
-      - `Popularity`: Popularitas lagu berdasarkan Spotify.
+- **`num_features`**  
+  Variabel `num_features` adalah daftar nama kolom yang berisi fitur numerik dari DataFrame `df_clean`. Fitur-fitur ini dipilih karena relevan untuk analisis atau pemrosesan lebih lanjut.
+  - Fitur yang dipilih:
+    - `Danceability`: Tingkat kelayakan lagu untuk menari.
+    - `Energy`: Tingkat energi lagu.
+    - `Speechiness`: Proporsi elemen vokal dalam lagu.
+    - `Acousticness`: Kemungkinan lagu bersifat akustik.
+    - `Instrumentalness`: Tingkat instrumental dalam lagu.
+    - `Liveness`: Kemungkinan lagu direkam secara langsung.
+    - `Valence`: Tingkat kebahagiaan atau kesedihan lagu.
+    - `Tempo`: Kecepatan lagu dalam BPM (beats per minute).
+    - `Popularity`: Popularitas lagu berdasarkan Spotify.
 
- **`scaler = MinMaxScaler()`**  
-    - Membuat objek `MinMaxScaler` dari library `sklearn.preprocessing`.
-    - `MinMaxScaler` digunakan untuk normalisasi data, yaitu mengubah nilai fitur ke dalam rentang [0, 1]. Hal ini dilakukan agar semua fitur memiliki skala yang sama, sehingga tidak ada fitur yang mendominasi analisis atau model.
+- **`scaler = MinMaxScaler()`**  
+  Membuat objek `MinMaxScaler` dari library `sklearn.preprocessing`. `MinMaxScaler` digunakan untuk normalisasi data, yaitu mengubah nilai fitur ke dalam rentang [0, 1]. Hal ini dilakukan agar semua fitur memiliki skala yang sama, sehingga tidak ada fitur yang mendominasi analisis atau model.
 
- **`df_clean[num_features]`**  
-    - Mengambil subset DataFrame `df_clean` yang hanya berisi kolom-kolom yang ada di `num_features`.
+- **`df_clean[num_features]`**  
+  Mengambil subset DataFrame `df_clean` yang hanya berisi kolom-kolom yang ada di `num_features`.
 
- **`scaler.fit_transform(df_clean[num_features])`**  
-    - `fit_transform()` melakukan dua hal:
-      - **`fit`**: Menghitung nilai minimum dan maksimum dari setiap kolom dalam `num_features`.
-      - **`transform`**: Mengubah nilai setiap kolom ke dalam rentang [0, 1] berdasarkan nilai minimum dan maksimum yang telah dihitung.
-    - Hasilnya adalah array numpy (`df_num_scaled`) yang berisi nilai-nilai fitur numerik yang telah dinormalisasi.
+- **`scaler.fit_transform(df_clean[num_features])`**  
+  `fit_transform()` melakukan dua hal:
+  - **`fit`**: Menghitung nilai minimum dan maksimum dari setiap kolom dalam `num_features`.
+  - **`transform`**: Mengubah nilai setiap kolom ke dalam rentang [0, 1] berdasarkan nilai minimum dan maksimum yang telah dihitung.
+  Hasilnya adalah array numpy (`df_num_scaled`) yang berisi nilai-nilai fitur numerik yang telah dinormalisasi.
 
- **`df_num_scaled`**  
-    - Variabel ini menyimpan hasil normalisasi dalam bentuk array numpy. Array ini dapat digunakan untuk analisis lebih lanjut, seperti pembuatan matriks fitur gabungan atau input ke model machine learning.
+- **`df_num_scaled`**  
+  Variabel ini menyimpan hasil normalisasi dalam bentuk array numpy. Array ini dapat digunakan untuk analisis lebih lanjut, seperti pembuatan matriks fitur gabungan atau input ke model machine learning.
 
-### Contoh:
+**Contoh:**
 Jika nilai awal kolom `Danceability` adalah [0.5, 0.7, 0.9], maka setelah normalisasi dengan `MinMaxScaler`, nilai tersebut akan diubah menjadi [0.0, 0.5, 1.0] (dengan asumsi 0.5 adalah nilai minimum dan 0.9 adalah nilai maksimum).
-
 
 ### 5. Gabungkan Fitur Teks dan Numerik
 
 ```python
-
 # Create TF-IDF vectorizer for text features
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(df_clean['combined_features'])
 
 combined_matrix = hstack([tfidf_matrix, df_num_scaled])
 combined_matrix = csr_matrix(combined_matrix)
-
 ```
 **Penjelasan:**  
 ### Penjelasan Kode: Gabungkan Fitur Teks dan Numerik
 
 1. **TF-IDF Vectorization pada Fitur Teks**
-  - `tfidf = TfidfVectorizer(stop_words='english')`  
-    Membuat objek TF-IDF vectorizer untuk mengubah data teks menjadi representasi numerik, dengan menghilangkan stopwords bahasa Inggris.
-  - `tfidf_matrix = tfidf.fit_transform(df_clean['combined_features'])`  
-    Mengubah kolom `combined_features` (gabungan genre dan nama artis) menjadi matriks TF-IDF. Setiap lagu direpresentasikan sebagai vektor berdasarkan kata-kata unik yang muncul di seluruh dataset.
+   - `tfidf = TfidfVectorizer(stop_words='english')`  
+     Membuat objek TF-IDF vectorizer untuk mengubah data teks menjadi representasi numerik, dengan menghilangkan stopwords bahasa Inggris.
+   - `tfidf_matrix = tfidf.fit_transform(df_clean['combined_features'])`  
+     Mengubah kolom `combined_features` (gabungan genre dan nama artis) menjadi matriks TF-IDF. Setiap lagu direpresentasikan sebagai vektor berdasarkan kata-kata unik yang muncul di seluruh dataset.
 
 2. **Penggabungan Fitur Teks dan Numerik**
-  - `combined_matrix = hstack([tfidf_matrix, df_num_scaled])`  
-    Menggabungkan matriks TF-IDF (fitur teks) dengan array hasil normalisasi fitur numerik (`df_num_scaled`) secara horizontal, sehingga setiap lagu memiliki representasi fitur gabungan (teks + numerik).
-  - `combined_matrix = csr_matrix(combined_matrix)`  
-    Mengubah hasil gabungan menjadi format sparse matrix (Compressed Sparse Row) agar efisien dalam penyimpanan dan komputasi, terutama untuk data berdimensi besar.
+   - `combined_matrix = hstack([tfidf_matrix, df_num_scaled])`  
+     Menggabungkan matriks TF-IDF (fitur teks) dengan array hasil normalisasi fitur numerik (`df_num_scaled`) secara horizontal, sehingga setiap lagu memiliki representasi fitur gabungan (teks + numerik).
+   - `combined_matrix = csr_matrix(combined_matrix)`  
+     Mengubah hasil gabungan menjadi format sparse matrix (Compressed Sparse Row) agar efisien dalam penyimpanan dan komputasi, terutama untuk data berdimensi besar.
 
 **Kesimpulan:**  
 Kode ini menghasilkan matriks fitur gabungan yang siap digunakan untuk menghitung kemiripan antar lagu pada sistem rekomendasi berbasis content-based filtering.
-=======
- **`hstack([tfidf_matrix, df_num_scaled])`**  
-    - Fungsi `hstack` dari `scipy.sparse` digunakan untuk menggabungkan dua matriks secara horizontal (kolom demi kolom).
-    - **`tfidf_matrix`**: Matriks TF-IDF yang merepresentasikan fitur teks (`combined_features`) dalam bentuk vektor sparse. Matriks ini memiliki dimensi `(9446, 4483)`.
-    - **`df_num_scaled`**: Matriks numpy yang berisi fitur numerik yang telah dinormalisasi. Matriks ini memiliki dimensi `(9446, 9)`.
-    - Hasil penggabungan adalah matriks sparse dengan dimensi `(9446, 4492)`.
-
- **`csr_matrix(combined_matrix)`**  
-    - Fungsi `csr_matrix` dari `scipy.sparse` digunakan untuk mengonversi hasil penggabungan menjadi format **Compressed Sparse Row (CSR)**.
-    - Format CSR lebih efisien untuk penyimpanan dan operasi matematis pada matriks sparse, seperti perhitungan kemiripan menggunakan `cosine_similarity`.
-
- **Hasil Akhir**  
-    - Variabel `combined_matrix` adalah matriks sparse dengan dimensi `(9446, 4492)`, yang menggabungkan fitur teks dan numerik.
-    - Matriks ini dapat digunakan sebagai input untuk analisis lebih lanjut, seperti perhitungan kemiripan antar lagu atau model machine learning.
-
-### Contoh Dimensi:
-- Sebelum penggabungan:
-  - `tfidf_matrix`: `(9446, 4483)`
-  - `df_num_scaled`: `(9446, 9)`
-- Setelah penggabungan:
-  - `combined_matrix`: `(9446, 4492)`
 
 ---
->>>>>>> 82cd89a38e5c435c86f550a57d03b94093e6a977
 
 ## Modeling
 
@@ -234,17 +207,17 @@ def recommend(track_name, top_n=5):
 
 Sistem rekomendasi ini bekerja dengan menggunakan teknik Content-Based Filtering untuk merekomendasikan lagu-lagu serupa berdasarkan karakteristik konten lagu. Berikut penjelasan cara kerjanya:
 
- **Pencarian Lagu**  
-    Fungsi `recommend()` mencari lagu dalam dataset berdasarkan nama lagu yang dimasukkan pengguna.
+- **Pencarian Lagu**  
+  Fungsi `recommend()` mencari lagu dalam dataset berdasarkan nama lagu yang dimasukkan pengguna.
 
- **Perhitungan Kesamaan**  
-    Setelah lagu ditemukan, sistem menghitung skor kesamaan antara lagu tersebut dengan semua lagu lain dalam dataset menggunakan cosine similarity.
+- **Perhitungan Kesamaan**  
+  Setelah lagu ditemukan, sistem menghitung skor kesamaan antara lagu tersebut dengan semua lagu lain dalam dataset menggunakan cosine similarity.
 
- **Pemilihan Rekomendasi**  
-    Sistem memilih lagu-lagu dengan skor kesamaan tertinggi sebagai rekomendasi, dengan jumlah sesuai parameter `top_n`.
+- **Pemilihan Rekomendasi**  
+  Sistem memilih lagu-lagu dengan skor kesamaan tertinggi sebagai rekomendasi, dengan jumlah sesuai parameter `top_n`.
 
- **Hasil Rekomendasi**  
-    Output berupa dataframe yang menampilkan informasi lagu-lagu yang direkomendasikan, meliputi judul lagu, nama artis, dan genre.
+- **Hasil Rekomendasi**  
+  Output berupa dataframe yang menampilkan informasi lagu-lagu yang direkomendasikan, meliputi judul lagu, nama artis, dan genre.
 
 Fitur yang digunakan mencakup kombinasi fitur teks (genre dan nama artis) dan fitur audio (seperti danceability, energy, speechiness, dll) yang telah dinormalisasi untuk menghasilkan rekomendasi yang akurat berdasarkan karakteristik musik.
 
@@ -256,15 +229,11 @@ print(hasil)
 ## Insight Hasil Rekomendasi untuk Lagu "Shape of You"
 
 ### Analisis Rekomendasi
- **Kesamaan Artis**: Sistem merekomendasikan 5 lagu yang seluruhnya dari artis yang sama, yaitu Ed Sheeran. Ini menunjukkan bahwa model mengidentifikasi kesamaan creator sebagai faktor signifikan dalam preferensi musik.
-
- **Konsistensi Genre**: Semua lagu yang direkomendasikan memiliki genre yang identik: "pop, singer-songwriter pop, uk pop". Hal ini menandakan sistem berhasil mengidentifikasi karakteristik genre yang relevan dengan lagu input.
-
- **Variasi Lagu**: Sistem merekomendasikan berbagai lagu dari Ed Sheeran dengan judul berbeda ("Shivers", "Eyes Closed", "New York", "Small Bump", "Sing"), menunjukkan keragaman dalam katalog musik artis tersebut.
-
- **Efektivitas Content-Based Filtering**: Hasil ini memperlihatkan bahwa sistem rekomendasi berbasis konten bekerja dengan baik dalam mengidentifikasi kesamaan berdasarkan metadata dan fitur audio.
-
- **Potensi Pengembangan**: Meskipun rekomendasi akurat dari segi kesamaan artis dan genre, sistem mungkin dapat ditingkatkan untuk memberikan variasi artis yang lebih beragam namun tetap mempertahankan kesamaan karakteristik musik.
+- **Kesamaan Artis**: Sistem merekomendasikan 5 lagu yang seluruhnya dari artis yang sama, yaitu Ed Sheeran. Ini menunjukkan bahwa model mengidentifikasi kesamaan creator sebagai faktor signifikan dalam preferensi musik.
+- **Konsistensi Genre**: Semua lagu yang direkomendasikan memiliki genre yang identik: "pop, singer-songwriter pop, uk pop". Hal ini menandakan sistem berhasil mengidentifikasi karakteristik genre yang relevan dengan lagu input.
+- **Variasi Lagu**: Sistem merekomendasikan berbagai lagu dari Ed Sheeran dengan judul berbeda ("Shivers", "Eyes Closed", "New York", "Small Bump", "Sing"), menunjukkan keragaman dalam katalog musik artis tersebut.
+- **Efektivitas Content-Based Filtering**: Hasil ini memperlihatkan bahwa sistem rekomendasi berbasis konten bekerja dengan baik dalam mengidentifikasi kesamaan berdasarkan metadata dan fitur audio.
+- **Potensi Pengembangan**: Meskipun rekomendasi akurat dari segi kesamaan artis dan genre, sistem mungkin dapat ditingkatkan untuk memberikan variasi artis yang lebih beragam namun tetap mempertahankan kesamaan karakteristik musik.
 
 **Kelebihan:**
 - Tidak membutuhkan data interaksi pengguna.
