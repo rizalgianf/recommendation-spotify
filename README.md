@@ -164,36 +164,32 @@ Jika nilai awal kolom `Danceability` adalah [0.5, 0.7, 0.9], maka setelah normal
 ### 5. Gabungkan Fitur Teks dan Numerik
 
 ```python
+
+# Create TF-IDF vectorizer for text features
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(df_clean['combined_features'])
+
 combined_matrix = hstack([tfidf_matrix, df_num_scaled])
 combined_matrix = csr_matrix(combined_matrix)
+
 ```
 **Penjelasan:**  
 ### Penjelasan Kode: Gabungkan Fitur Teks dan Numerik
 
-Kode ini bertujuan untuk menggabungkan dua jenis fitur, yaitu fitur teks yang telah diubah menjadi matriks TF-IDF (`tfidf_matrix`) dan fitur numerik yang telah dinormalisasi (`df_num_scaled`), menjadi satu matriks gabungan (`combined_matrix`). Berikut penjelasan langkah-langkahnya:
+1. **TF-IDF Vectorization pada Fitur Teks**
+  - `tfidf = TfidfVectorizer(stop_words='english')`  
+    Membuat objek TF-IDF vectorizer untuk mengubah data teks menjadi representasi numerik, dengan menghilangkan stopwords bahasa Inggris.
+  - `tfidf_matrix = tfidf.fit_transform(df_clean['combined_features'])`  
+    Mengubah kolom `combined_features` (gabungan genre dan nama artis) menjadi matriks TF-IDF. Setiap lagu direpresentasikan sebagai vektor berdasarkan kata-kata unik yang muncul di seluruh dataset.
 
-1. **`hstack([tfidf_matrix, df_num_scaled])`**  
-    - Fungsi `hstack` dari `scipy.sparse` digunakan untuk menggabungkan dua matriks secara horizontal (kolom demi kolom).
-    - **`tfidf_matrix`**: Matriks TF-IDF yang merepresentasikan fitur teks (`combined_features`) dalam bentuk vektor sparse. Matriks ini memiliki dimensi `(9446, 4483)`.
-    - **`df_num_scaled`**: Matriks numpy yang berisi fitur numerik yang telah dinormalisasi. Matriks ini memiliki dimensi `(9446, 9)`.
-    - Hasil penggabungan adalah matriks sparse dengan dimensi `(9446, 4492)`.
+2. **Penggabungan Fitur Teks dan Numerik**
+  - `combined_matrix = hstack([tfidf_matrix, df_num_scaled])`  
+    Menggabungkan matriks TF-IDF (fitur teks) dengan array hasil normalisasi fitur numerik (`df_num_scaled`) secara horizontal, sehingga setiap lagu memiliki representasi fitur gabungan (teks + numerik).
+  - `combined_matrix = csr_matrix(combined_matrix)`  
+    Mengubah hasil gabungan menjadi format sparse matrix (Compressed Sparse Row) agar efisien dalam penyimpanan dan komputasi, terutama untuk data berdimensi besar.
 
-2. **`csr_matrix(combined_matrix)`**  
-    - Fungsi `csr_matrix` dari `scipy.sparse` digunakan untuk mengonversi hasil penggabungan menjadi format **Compressed Sparse Row (CSR)**.
-    - Format CSR lebih efisien untuk penyimpanan dan operasi matematis pada matriks sparse, seperti perhitungan kemiripan menggunakan `cosine_similarity`.
-
-3. **Hasil Akhir**  
-    - Variabel `combined_matrix` adalah matriks sparse dengan dimensi `(9446, 4492)`, yang menggabungkan fitur teks dan numerik.
-    - Matriks ini dapat digunakan sebagai input untuk analisis lebih lanjut, seperti perhitungan kemiripan antar lagu atau model machine learning.
-
-### Contoh Dimensi:
-- Sebelum penggabungan:
-  - `tfidf_matrix`: `(9446, 4483)`
-  - `df_num_scaled`: `(9446, 9)`
-- Setelah penggabungan:
-  - `combined_matrix`: `(9446, 4492)`
-
----
+**Kesimpulan:**  
+Kode ini menghasilkan matriks fitur gabungan yang siap digunakan untuk menghitung kemiripan antar lagu pada sistem rekomendasi berbasis content-based filtering.
 
 ## Modeling
 
@@ -260,6 +256,34 @@ print(hasil)
 
 Metrik evaluasi utama adalah **cosine similarity** antara fitur lagu input dan lagu lain. Evaluasi dilakukan secara kualitatif dengan melihat relevansi hasil rekomendasi.
 
-**Contoh hasil rekomendasi untuk lagu "Shape of You":**
-- Semua lagu yang direkomendasikan berasal dari Ed Sheeran dengan genre yang sama, menunjukkan sistem efektif dalam mengidentifikasi kemiripan konten.
+## Analisis Hasil Evaluasi Sistem Rekomendasi Musik
+
+Hasil evaluasi menunjukkan kinerja sistem rekomendasi musik berbasis content-based filtering untuk empat lagu populer. Berikut analisisnya:
+
+### 1. Artist Diversity (Keberagaman Artis)
+- **Nilai rata-rata: 0.25 (skala 0-1)**
+- Nilai ini cukup rendah, menunjukkan sistem cenderung merekomendasikan lagu dari artis yang sama
+- 3 dari 4 lagu ("Shape of You", "Billie Jean", "Watermelon Sugar") memiliki nilai 0.2, artinya hanya 20% artis yang unik
+- "Bad Guy" memiliki keberagaman artis lebih tinggi (0.4), menandakan variasi artis yang lebih baik
+
+### 2. Genre Diversity (Keberagaman Genre)
+- **Nilai rata-rata: 0.21 (skala 0-1)**
+- Nilai ini rendah, mengindikasikan rekomendasi terbatas pada genre yang sangat mirip
+- "Bad Guy" menunjukkan diversitas genre tertinggi (0.25)
+- Lagu lainnya memiliki nilai 0.20, menandakan kurangnya variasi genre
+
+### 3. Average Popularity (Rata-rata Popularitas)
+- **Nilai rata-rata: 50.90 (skala 0-100)**
+- "Billie Jean" mendapatkan rekomendasi lagu-lagu paling populer (69.8)
+- "Shape of You" justru mendapat rekomendasi lagu-lagu kurang populer (28.6)
+- Menunjukkan sistem tidak selalu mengutamakan lagu populer, tetapi lebih fokus pada kesamaan karakteristik
+
+### 4. Average Similarity (Rata-rata Kesamaan)
+- **Nilai rata-rata: 0.94 (skala 0-1)**
+- Nilai sangat tinggi, menunjukkan rekomendasi sangat relevan dari segi kemiripan konten
+- "Billie Jean" memiliki tingkat kemiripan tertinggi (0.988), hampir sempurna
+- Semua lagu mendapatkan rekomendasi dengan nilai kesamaan di atas 0.9, mengindikasikan sistem sangat baik dalam mengidentifikasi lagu-lagu yang mirip
+
+### Kesimpulan
+Sistem rekomendasi sangat kuat dalam memberikan rekomendasi yang relevan (similarity tinggi) tetapi kurang dalam keberagaman (diversity rendah). Ini merupakan trade-off klasik dalam sistem rekomendasi content-based, di mana relevansi tinggi sering berarti keberagaman rendah. Untuk peningkatan, dapat dipertimbangkan teknik hybrid yang menggabungkan content-based dengan collaborative filtering atau menambahkan faktor randomisasi tertentu untuk meningkatkan keberagaman rekomendasi.
 
