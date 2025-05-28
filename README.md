@@ -182,7 +182,6 @@ combined_matrix = csr_matrix(combined_matrix)
   - `tfidf_matrix = tfidf.fit_transform(df_clean['combined_features'])`  
     Mengubah kolom `combined_features` (gabungan genre dan nama artis) menjadi matriks TF-IDF. Setiap lagu direpresentasikan sebagai vektor berdasarkan kata-kata unik yang muncul di seluruh dataset.
 
-<<<<<<< HEAD
 2. **Penggabungan Fitur Teks dan Numerik**
   - `combined_matrix = hstack([tfidf_matrix, df_num_scaled])`  
     Menggabungkan matriks TF-IDF (fitur teks) dengan array hasil normalisasi fitur numerik (`df_num_scaled`) secara horizontal, sehingga setiap lagu memiliki representasi fitur gabungan (teks + numerik).
