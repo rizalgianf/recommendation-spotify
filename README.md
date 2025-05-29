@@ -288,7 +288,14 @@ print(hasil)
 
 ## Evaluation
 
-Metrik evaluasi utama adalah **cosine similarity** antara fitur lagu input dan lagu lain. Evaluasi dilakukan secara kualitatif dengan melihat relevansi hasil rekomendasi.
+Evaluasi sistem rekomendasi dilakukan menggunakan beberapa metrik yang relevan untuk mengukur kualitas dan keberagaman hasil rekomendasi, yaitu **Artist Diversity**, **Genre Diversity**, **Average Popularity**, dan **Average Similarity**. Metrik-metrik ini dipilih karena dapat memberikan gambaran menyeluruh mengenai seberapa baik sistem dalam menghasilkan rekomendasi yang tidak hanya relevan, tetapi juga bervariasi dan sesuai preferensi pengguna:
+
+- **Artist Diversity** mengukur keberagaman artis dalam hasil rekomendasi, penting untuk menghindari rekomendasi yang monoton dari artis yang sama.
+- **Genre Diversity** menilai variasi genre pada lagu-lagu yang direkomendasikan, sehingga pengguna dapat menemukan musik dari berbagai genre yang masih relevan.
+- **Average Popularity** memberikan insight apakah sistem cenderung merekomendasikan lagu populer atau justru lagu yang kurang dikenal.
+- **Average Similarity** mengukur tingkat kemiripan antara lagu input dan lagu-lagu yang direkomendasikan, memastikan relevansi rekomendasi secara konten.
+
+Evaluasi dilakukan secara kuantitatif dengan menghitung nilai keempat metrik tersebut pada beberapa lagu populer, serta secara kualitatif dengan menilai relevansi hasil rekomendasi.
 
 ## Analisis Hasil Evaluasi Sistem Rekomendasi Musik
 
@@ -320,4 +327,3 @@ Hasil evaluasi menunjukkan kinerja sistem rekomendasi musik berbasis content-bas
 
 ### Kesimpulan
 Sistem rekomendasi sangat kuat dalam memberikan rekomendasi yang relevan (similarity tinggi) tetapi kurang dalam keberagaman (diversity rendah). Ini merupakan trade-off klasik dalam sistem rekomendasi content-based, di mana relevansi tinggi sering berarti keberagaman rendah. Untuk peningkatan, dapat dipertimbangkan teknik hybrid yang menggabungkan content-based dengan collaborative filtering atau menambahkan faktor randomisasi tertentu untuk meningkatkan keberagaman rekomendasi.
-
