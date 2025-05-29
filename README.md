@@ -288,7 +288,7 @@ print(hasil)
 
 ## Evaluation
 
-Evaluasi sistem rekomendasi dilakukan menggunakan beberapa metrik yang relevan untuk mengukur kualitas dan keberagaman hasil rekomendasi, yaitu **Artist Diversity**, **Genre Diversity**, **Average Popularity**, dan **Average Similarity**. Metrik-metrik ini dipilih karena dapat memberikan gambaran menyeluruh mengenai seberapa baik sistem dalam menghasilkan rekomendasi yang tidak hanya relevan, tetapi juga bervariasi dan sesuai preferensi pengguna:
+Evaluasi sistem rekomendasi dilakukan menggunakan beberapa metrik yang relevan untuk mengukur kualitas dan keberagaman hasil rekomendasi, yaitu **Artist Diversity**, **Genre Diversity**, **Average Popularity**, dan **Average Similarity**. Metrik-metrik ini dipilih karena dapat memberikan gambaran menyeluruh mengenai seberapa baik sistem dalam menghasilkan rekomendasi yang tidak hanya relevan, tetapi juga bervariasi :
 
 - **Artist Diversity** mengukur keberagaman artis dalam hasil rekomendasi, penting untuk menghindari rekomendasi yang monoton dari artis yang sama.
 - **Genre Diversity** menilai variasi genre pada lagu-lagu yang direkomendasikan, sehingga pengguna dapat menemukan musik dari berbagai genre yang masih relevan.
