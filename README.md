@@ -39,12 +39,44 @@ Dataset yang digunakan adalah [Top 10,000 Spotify Songs (1960-now)](https://www.
 - Baris: 10.000  
 - Kolom: 35
 
-**Fitur utama:**
-- Track Name: Nama lagu
-- Artist Name(s): Nama artis
-- Artist Genres: Genre artis
-- Danceability, Energy, Speechiness, Acousticness, Instrumentalness, Liveness, Valence, Tempo: Fitur audio numerik
-- Popularity: Skor popularitas lagu
+**Deskripsi Setiap Fitur pada Dataset:**
+
+1. **Track URI**: ID unik lagu di Spotify (format URI).
+2. **Track Name**: Judul lagu.
+3. **Artist URI(s)**: ID unik artis/artis yang membawakan lagu (format URI).
+4. **Artist Name(s)**: Nama artis/artis yang membawakan lagu.
+5. **Album URI**: ID unik album tempat lagu dirilis (format URI).
+6. **Album Name**: Nama album tempat lagu dirilis.
+7. **Album Artist URI(s)**: ID unik artis utama album (format URI).
+8. **Album Artist Name(s)**: Nama artis utama album.
+9. **Album Release Date**: Tanggal rilis album (format YYYY-MM-DD).
+10. **Album Image URL**: Link gambar sampul album.
+11. **Disc Number**: Nomor disc (untuk album multi-disc).
+12. **Track Number**: Urutan lagu dalam album/disc.
+13. **Track Duration (ms)**: Durasi lagu dalam milidetik.
+14. **Track Preview URL**: Link untuk preview lagu (potongan audio).
+15. **Explicit**: Apakah lagu mengandung konten eksplisit (True/False).
+16. **Popularity**: Skor popularitas lagu di Spotify (0–100).
+17. **ISRC**: International Standard Recording Code, kode unik rekaman.
+18. **Added By**: User yang menambahkan lagu ke playlist.
+19. **Added At**: Waktu lagu ditambahkan ke playlist.
+20. **Artist Genres**: Daftar genre yang diasosiasikan dengan artis.
+21. **Danceability**: Seberapa cocok lagu untuk menari (0–1).
+22. **Energy**: Tingkat energi lagu (0–1).
+23. **Key**: Kunci musik lagu (0–11, C=0, C#/Db=1, dst).
+24. **Loudness**: Tingkat kekerasan suara lagu (dB).
+25. **Mode**: Modus lagu (Mayor=1, Minor=0).
+26. **Speechiness**: Proporsi elemen vokal/spoken word (0–1).
+27. **Acousticness**: Kemungkinan lagu bersifat akustik (0–1).
+28. **Instrumentalness**: Kemungkinan lagu instrumental (0–1).
+29. **Liveness**: Kemungkinan lagu direkam live (0–1).
+30. **Valence**: Tingkat positif/ceria lagu (0–1).
+31. **Tempo**: Tempo lagu (BPM).
+32. **Time Signature**: Tanda birama lagu (misal: 4 = 4/4).
+33. **Album Genres**: Genre album (kosong di dataset ini).
+34. **Label**: Nama label rekaman.
+35. **Copyrights**: Informasi hak cipta lagu/album.
+
 
 **Kondisi Data:**
 - Sebagian besar kolom memiliki data yang cukup lengkap, namun terdapat beberapa kolom dengan nilai kosong (missing values):
@@ -226,6 +258,15 @@ Fitur yang digunakan mencakup kombinasi fitur teks (genre dan nama artis) dan fi
 hasil = recommend('Shape of You')
 print(hasil)
 ```
+## Result
+| No | Track Name   | Artist Name(s) | Artist Genres                        |
+|----|-------------|----------------|--------------------------------------|
+| 1  | Shivers     | Ed Sheeran     | pop, singer-songwriter pop, uk pop   |
+| 2  | Eyes Closed | Ed Sheeran     | pop, singer-songwriter pop, uk pop   |
+| 3  | New York    | Ed Sheeran     | pop, singer-songwriter pop, uk pop   |
+| 4  | Small Bump  | Ed Sheeran     | pop, singer-songwriter pop, uk pop   |
+| 5  | Sing        | Ed Sheeran     | pop, singer-songwriter pop, uk pop   |
+
 ## Insight Hasil Rekomendasi untuk Lagu "Shape of You"
 
 ### Analisis Rekomendasi
